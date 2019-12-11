@@ -1,0 +1,35 @@
+{
+    "name": "@markhuang1212/simple-https-proxy",
+    "version": "0.4.0",
+    "description": "",
+    "main": "main.js",
+    "bin": {
+        "node-proxy": "main.js"
+    },
+    "scripts": {
+        "build": "pkg . --out-path=build"
+    },
+    "pkg": {
+        "scripts": "src/**/*.js",
+        "assets": [
+            "host/**/*",
+            "cert/**/*",
+            "config/**/*",
+            "testkey/**/*"
+        ]
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/markhuang1212/simple-https-proxy.git"
+    },
+    "author": "",
+    "license": "MIT",
+    "dependencies": {
+        "node-cron": "^2.0.3"
+    },
+    "devDependencies": {
+        "commander": "^3.0.0",
+        "forever-monitor": "^1.7.1",
+        "platform-folders": "^0.4.1"
+    }
+}

@@ -1,0 +1,52 @@
+<html>
+
+<head>
+    <title>Welcome</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="data:,">
+    <style>
+        body {
+            margin: 16px;
+            font-family: sans-serif;
+        }
+
+        .main {
+            margin: 64px auto;
+            width: auto;
+            max-width: 512px;
+        }
+
+        #testSpeedButton{
+            margin: 20px 0px;
+            /* font-size: 14px; */
+        }
+
+        .label{
+            width: 128px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="main">
+        <h1>Hello</h1>
+        <div>Click the following button to test your connection speed</div>
+        <button id="testSpeedButton">Test Speed</button>
+        <table id="result">
+            <tr>
+                <td class="label">Respond Time:</td>
+                <td id="pingdisplay"></td>
+            </tr>
+            <tr>
+                <td class="label">Speed:</td>
+                <td id="speeddisplay"></td>
+            </tr>
+        </table>
+        <br>
+        <div>Version: 0.4.0</div>
+
+    </div>
+    <script src="main.js"></script>
+</body>
+
+</html>
