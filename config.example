@@ -14,11 +14,10 @@
 // SERVER
 
 {
-    "mode": "server"
-    "host": "abc.com"
+    "mode": "server",
+    "host": "abc.com",
     "remotePort": 443,
     "clientSSL": {
-        "key": "/path/to/key",
         "cert": "/path/to/cert"
     },
     "serverSSL": {
