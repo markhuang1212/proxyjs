@@ -22,14 +22,6 @@
         "type": "git",
         "url": "git+https://github.com/markhuang1212/simple-https-proxy.git"
     },
-    "author": "",
-    "license": "MIT",
-    "dependencies": {
-        "node-cron": "^2.0.3"
-    },
-    "devDependencies": {
-        "commander": "^3.0.0",
-        "forever-monitor": "^1.7.1",
-        "platform-folders": "^0.4.1"
-    }
+    "author": "HM",
+    "license": "MIT"
 }
