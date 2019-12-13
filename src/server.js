@@ -87,8 +87,7 @@ server.on('connect', (req, cltSocket, head) => {
     }
 
     if (req.url.match('pornhub.com')) {
-        cltSocket.write('HTTP/1.1 302 Connection Established\r\n' +
-            'Location: https://ali.ada00ada.com/error.html' + '\r\n' + '\r\n')
+        cltSocket.write('403 Forbidden' + '\r\n')
     }
 
     // authorization
