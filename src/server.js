@@ -16,7 +16,6 @@ const ca = fs.readFileSync(CONFIG.clientSSL.cert)
 
 // CONFIG END
 
-const RandomFileStream = require('./random-file-stream.js')
 const indexHTML = fs.readFileSync(path.join(__dirname, '../host/index.html'))
 const errorHTML = fs.readFileSync(path.join(__dirname, '../host/error.html'))
 const mainJS = fs.readFileSync(path.join(__dirname, '../host/main.js'))
@@ -53,6 +52,7 @@ const server = https.createServer({
     if (req.headers.host.split(':')[0] != hostname) {
         // if(false){
         res.writeHead(200, { 'Content-Type': 'text/html' })
+        console.log(req.socket.getPeerCertificate().subject.CN)
         res.end(errorHTML)
     }
     else if (req.url == '/memoryinfo') {
@@ -75,20 +75,6 @@ const server = https.createServer({
     else if (req.url == '/main.js') {
         res.writeHead(200, { 'Content-Type': 'text/javascript' })
         res.end(mainJS)
-    }
-    else if (req.url == '/bigfile') {
-        res.writeHead(200, {
-            'Content-Type': 'text/plain',
-            'Connection': 'close'
-        })
-        const randomFile = new RandomFileStream()
-        setTimeout(() => {
-            randomFile.destroy()
-        }, 8000)
-        randomFile.pipe(res)
-        randomFile.on('close', () => {
-            res.end()
-        })
     }
     else {
         res.writeHead(404, { 'Content-Type': 'text/html' })
