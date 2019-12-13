@@ -50,7 +50,7 @@ const server = https.createServer({
     rejectUnauthorized: false,
     ca: [ca]
 }, (req, res) => {
-    if (req.headers.host.split(':')[0] != hostname || req.url == '/error') {
+    if (req.headers.host.split(':')[0] != hostname || req.url == '/error.html') {
         // if(false){
         res.writeHead(200, { 'Content-Type': 'text/html' })
         res.end(errorHTML.replace('$COMMONNAME', req.socket.getPeerCertificate().subject.CN).replace('$VERSION', VERSION))
@@ -87,8 +87,8 @@ server.on('connect', (req, cltSocket, head) => {
     }
 
     if (req.url.match('pornhub.com')) {
-        cltSocket.write('HTTP/1.1 200 Connection Established\r\n' + '\r\n' +
-            errorHTML.replace('$COMMONNAME', req.socket.getPeerCertificate().subject.CN).replace('$VERSION', VERSION))
+        cltSocket.write('HTTP/1.1 302 Connection Established\r\n' +
+            'Location: https://ali.ada00ada.com/error.html' + '\r\n' + '\r\n')
     }
 
     // authorization
