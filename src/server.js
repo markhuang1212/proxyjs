@@ -50,7 +50,7 @@ const server = https.createServer({
     rejectUnauthorized: false,
     ca: [ca]
 }, (req, res) => {
-    if (req.headers.host.split(':')[0] != hostname) {
+    if (req.headers.host.split(':')[0] != hostname || req.url == '/error') {
         // if(false){
         res.writeHead(200, { 'Content-Type': 'text/html' })
         res.end(errorHTML.replace('$COMMONNAME', req.socket.getPeerCertificate().subject.CN).replace('$VERSION', VERSION))
@@ -63,10 +63,6 @@ const server = https.createServer({
         res.writeHead(200, { 'Content-Type': 'text/plain' })
         res.end('reset success')
         process.exit(1)
-    }
-    else if (req.url == '/authinfo') {
-        res.writeHead(200, { 'Content-Type': 'text/plain' })
-        res.end(req.socket.authorized ? 'Authorized' : 'Unauthorized')
     }
     else if (req.url == '/' || req.url == '/index.html') {
         res.writeHead(200, { 'Content-Type': 'text/html' })
@@ -88,6 +84,11 @@ server.on('connect', (req, cltSocket, head) => {
     if (!req.socket.authorized) {
         console.log('unauthorized')
         return ''
+    }
+
+    if (req.url.match('pornhub.com')) {
+        cltSocket.write('HTTP/1.1 200 Connection Established\r\n' + '\r\n' +
+            errorHTML.replace('$COMMONNAME', req.socket.getPeerCertificate().subject.CN).replace('$VERSION', VERSION))
     }
 
     // authorization
