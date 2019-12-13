@@ -17,9 +17,9 @@ const ca = fs.readFileSync(CONFIG.clientSSL.cert)
 
 // CONFIG END
 
-const indexHTML = fs.readFileSync(path.join(__dirname, '../host/index.html'))
-const errorHTML = fs.readFileSync(path.join(__dirname, '../host/error.html'))
-const mainJS = fs.readFileSync(path.join(__dirname, '../host/main.js'))
+const indexHTML = fs.readFileSync(path.join(__dirname, '../host/index.html'), { encoding: 'string' })
+const errorHTML = fs.readFileSync(path.join(__dirname, '../host/error.html'), { encoding: 'string' })
+const mainJS = fs.readFileSync(path.join(__dirname, '../host/main.js'), { encoding: 'string' })
 
 // const user = app_config.username
 // const psd = app_config.password
