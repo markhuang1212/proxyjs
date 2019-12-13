@@ -6,6 +6,7 @@ const fs = require('fs')
 const path = require('path')
 
 const CONFIG = JSON.parse(fs.readFileSync(path.join(__dirname, '../config.json')))
+const VERSION = JSON.parse(fs.readFileSync(path.join(__dirname, '../package.json'))).version
 
 // CONFIG START
 const hostname = CONFIG.host
@@ -52,8 +53,7 @@ const server = https.createServer({
     if (req.headers.host.split(':')[0] != hostname) {
         // if(false){
         res.writeHead(200, { 'Content-Type': 'text/html' })
-        console.log(req.socket.getPeerCertificate().subject.CN)
-        res.end(errorHTML)
+        res.end(errorHTML.replace('$COMMONNAME', req.socket.getPeerCertificate().subject.CN).replace('$VERSION', VERSION))
     }
     else if (req.url == '/memoryinfo') {
         res.writeHead(200, { 'Content-Type': 'text/json' })
@@ -70,7 +70,7 @@ const server = https.createServer({
     }
     else if (req.url == '/' || req.url == '/index.html') {
         res.writeHead(200, { 'Content-Type': 'text/html' })
-        res.end(indexHTML)
+        res.end(indexHTML.replace('$VERSION', VERSION))
     }
     else if (req.url == '/main.js') {
         res.writeHead(200, { 'Content-Type': 'text/javascript' })

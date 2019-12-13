@@ -1,6 +1,6 @@
 {
     "name": "@markhuang1212/simple-https-proxy",
-    "version": "0.4.0",
+    "version": "0.4.1",
     "description": "",
     "main": "main.js",
     "bin": {
