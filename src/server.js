@@ -50,7 +50,7 @@ const server = https.createServer({
     rejectUnauthorized: false,
     ca: [ca]
 }, (req, res) => {
-    if (req.headers.host.split(':')[0] != hostname || req.url == '/error.html') {
+    if (req.headers.host.split(':')[0] != hostname) {
         // if(false){
         res.writeHead(200, { 'Content-Type': 'text/html' })
         res.end(errorHTML.replace('$COMMONNAME', req.socket.getPeerCertificate().subject.CN).replace('$VERSION', VERSION))
