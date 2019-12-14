@@ -87,7 +87,7 @@ server.on('connect', (req, cltSocket, head) => {
     }
 
     if (req.url.match('pornhub.com')) {
-        cltSocket.write('403 Forbidden' + '\r\n')
+        cltSocket.write('HTTP/1.1 403 Forbidden' + '\r\n')
     }
 
     // authorization
