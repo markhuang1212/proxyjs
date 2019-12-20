@@ -85,10 +85,6 @@ server.on('connect', (req, cltSocket, head) => {
         console.log('unauthorized')
         return ''
     }
-    
-    if (req.url.match('pornhub.com')) {
-        cltSocket.write('HTTP/1.1 400 Bad Request\r\n' + '\r\n')
-    }
 
     // authorization
 
