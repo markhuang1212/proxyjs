@@ -14,16 +14,11 @@ const remotePort = CONFIG.remotePort
 const key = fs.readFileSync(CONFIG.serverSSL.key)
 const cert = fs.readFileSync(CONFIG.serverSSL.cert)
 const ca = fs.readFileSync(CONFIG.clientSSL.cert)
-
 // CONFIG END
 
 const indexHTML = fs.readFileSync(path.join(__dirname, '../host/index.html'), 'utf8')
 const errorHTML = fs.readFileSync(path.join(__dirname, '../host/error.html'), 'utf8')
 const mainJS = fs.readFileSync(path.join(__dirname, '../host/main.js'), 'utf8')
-
-// const user = app_config.username
-// const psd = app_config.password
-
 
 const ciphers = [
     'TLS_AES_128_GCM_SHA256',
