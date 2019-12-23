@@ -2,21 +2,9 @@
     "name": "@markhuang1212/simple-https-proxy",
     "version": "0.4.1",
     "description": "",
-    "main": "main.js",
     "bin": {
-        "node-proxy": "main.js"
-    },
-    "scripts": {
-        "build": "pkg . --out-path=build"
-    },
-    "pkg": {
-        "scripts": "src/**/*.js",
-        "assets": [
-            "host/**/*",
-            "cert/**/*",
-            "config/**/*",
-            "testkey/**/*"
-        ]
+        "proxy-client": "src/client.js",
+        "proxy-server": "src/server.js"
     },
     "repository": {
         "type": "git",

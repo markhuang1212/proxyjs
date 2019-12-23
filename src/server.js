@@ -86,36 +86,11 @@ server.on('connect', (req, cltSocket, head) => {
         return ''
     }
 
-    // authorization
-
-    // if (!req.headers['proxy-authorization']) {
-    //     cltSocket.write('HTTP/1.1 407 Proxy Authentication Required\r\n' +
-    //         'Proxy-Authenticate: Basic realm=\"Access to internal site\"\r\n' + '\r\n')
-    //     cltSocket.end()
-    //     return
-    // }
-
-    // try {
-    //     const credential = req.headers['proxy-authorization'].split(' ')[1]
-    //     const [cre_user, cre_psd] = new Buffer.from(credential, 'base64').toString('utf8').split(':')
-
-    //     if (cre_user != user || cre_psd != psd) {
-    //         cltSocket.write('HTTP/1.1 407 Proxy Authentication Required\r\n' +
-    //             'Proxy-Authenticate: Basic realm=\"Access to internal site\"\r\n' + '\r\n')
-    //         cltSocket.end()
-    //         return
-    //     }
-    // } catch (e) {
-    //     cltSocket.end()
-    //     return 1
-    // }
-
     const { port, hostname } = url.parse(`http://${req.url}`)
 
     const srvSocket = net.connect(port, hostname, () => {
         cltSocket.write('HTTP/1.1 200 Connection Established\r\n' +
-            'Proxy-agent: Node.js-Proxy\r\n' +
-            '\r\n')
+            'Proxy-agent: Node.js-Proxy\r\n' + '\r\n')
         srvSocket.write(head)
         srvSocket.pipe(cltSocket)
         cltSocket.pipe(srvSocket)
@@ -135,17 +110,14 @@ server.on('connect', (req, cltSocket, head) => {
 
     srvSocket.on('error', err => {
         console.error(`server socket error: ${err.message}`)
-        if (typeof cltSocket !== 'undefined') {
-            // cltSocket.end(`HTTP/1.1 500 ${err.message}\r\n`)
+        if (typeof cltSocket !== 'undefined')
             cltSocket.destroy()
-        }
     })
 
     cltSocket.on('error', err => {
         console.error(`client socket error: ${err.message}`)
-        if (typeof srvSocket !== 'undefined') {
+        if (typeof srvSocket !== 'undefined')
             srcSocket.destroy()
-        }
     })
 })
 
@@ -167,13 +139,3 @@ http.createServer((req, res) => {
 process.on('uncaughtException', function (exception) {
     console.error(`uncaught error: ${exception.message}`)
 });
-
-if (global.gc) {
-    setInterval(() => {
-        global.gc()
-    }, 15000)
-}
-
-// cron.schedule('0 0 4 * * *', () => {
-//     process.exit(1)
-// })
