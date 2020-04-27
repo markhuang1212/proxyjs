@@ -74,12 +74,12 @@ const server = https.createServer({
 })
 
 server.on('connect', (req, cltSocket, head) => {
-    console.log(req.url)
-
     if (!req.socket.authorized) {
         console.log('unauthorized')
         return ''
     }
+
+    console.log(req.url + ' ' + req.socket.getPeerCertificate().subject.CN)
 
     const { port, hostname } = url.parse(`http://${req.url}`)
 
