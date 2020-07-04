@@ -4,6 +4,7 @@ const net = require('net')
 const url = require('url')
 const fs = require('fs')
 const path = require('path')
+const { type } = require('os')
 
 const CONFIG = JSON.parse(fs.readFileSync(path.join(__dirname, '../config.json')))
 const VERSION = JSON.parse(fs.readFileSync(path.join(__dirname, '../package.json'))).version
@@ -47,8 +48,36 @@ const server = https.createServer({
 }, (req, res) => {
     if (req.headers.host.split(':')[0] != hostname) {
         // if(false){
-        res.writeHead(200, { 'Content-Type': 'text/html' })
-        res.end(errorHTML.replace('$COMMONNAME', req.socket.getPeerCertificate().subject.CN).replace('$VERSION', VERSION))
+        if (!req.socket.authorized) {
+            console.log('unauthorized')
+            return ''
+        }
+
+        console.log(req.url + ' ' + req.socket.getPeerCertificate().subject.CN + ' INSECURE REQUEST!')
+
+        var proxy = http.request({
+            hostname: req.headers.host.split(':')[0],
+            port: req.headers.host.split(':')[1],
+            path: req.url,
+            method: req.method,
+            headers: req.headers
+        }, resFromServer => {
+            res.writeHead(resFromServer.statusCode, resFromServer.headers)
+            resFromServer.pipe(resFromServer, { end: true })
+        })
+
+        proxy.setTimeout(120000, () => {
+            proxy.destroy()
+        })
+
+        proxy.on('error', () => {
+            if (typeof proxy != 'undefined') {
+                proxy.destroy()
+            }
+        })
+
+        res.pipe(proxy, { end: true })
+
     }
     else if (req.url == '/memoryinfo') {
         res.writeHead(200, { 'Content-Type': 'text/json' })
