@@ -63,7 +63,7 @@ const server = https.createServer({
             headers: req.headers
         }, resFromServer => {
             res.writeHead(resFromServer.statusCode, resFromServer.headers)
-            resFromServer.pipe(resFromServer, { end: true })
+            resFromServer.pipe(res, { end: true })
         })
 
         proxy.setTimeout(120000, () => {
@@ -76,7 +76,7 @@ const server = https.createServer({
             }
         })
 
-        res.pipe(proxy, { end: true })
+        req.pipe(proxy, { end: true })
 
     }
     else if (req.url == '/memoryinfo') {
