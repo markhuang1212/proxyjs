@@ -141,7 +141,7 @@ server.on('connect', (req, cltSocket, head) => {
     cltSocket.on('error', err => {
         console.error(`client socket error: ${err.message}`)
         if (typeof srvSocket !== 'undefined')
-            srcSocket.destroy()
+            srvSocket.destroy()
     })
 })
 
